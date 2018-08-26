@@ -1,0 +1,40 @@
+{% extends 'base.html' %} 
+{% load rest_framework %}
+{% load static %}
+
+{% block page_title %}
+<h1>Profile</h1>
+
+{% endblock %}
+{% block page_content %}
+<div class="col-md-12">
+	<div class="card">
+		<div class="card-header">
+			<strong class="card-title">Profile</strong>
+		</div>
+		<div class="card-body">
+			<!-- Credit Card -->
+			<div id="pay-invoice">
+				<div class="card-body">
+					<div class="card-title">
+					</div>
+					<hr>
+					<form action="{% url 'profile' %}" method="post" novalidate="novalidate">
+						{% csrf_token %}
+							{% render_form fields %}
+						<div>
+							<button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+								
+								<span id="payment-button-amount">Save</span>
+								
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+		</div>
+	</div> <!-- .card -->
+
+</div>
+{% endblock %}

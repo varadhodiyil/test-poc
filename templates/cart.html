@@ -1,0 +1,47 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block page_title %}
+<h1>Cart</h1>
+
+{% endblock %}
+{% block page_content %}
+<div class="row">
+	
+	{% if products|length == 0 %}
+		<p > Looks like your cart is Empty, Please add products to continue</p>
+	{% endif %}
+	{% for product in products %}
+	<div class="col-md-4">
+		<div class="card">
+			<img class="card-img-top" src="{{product.image.src}}" alt="Card image cap">
+			<div class="card-body">
+				<div>
+					<div class="row">
+						<h4 class="card-title mb-3 col-md-9">{{product.title}}</h4>
+						<p class="col-md-3 product-price">{{product.variants.price}} $</p>
+					</div>
+					<p >Added to Cart : {{product.added_at  }} ago</p>
+					<p class="card-text">{{product.body_html |safe}}</p>
+				</div>
+				<hr/>
+				<div class="card-text text-sm-center">
+					<p> Variant : {{product.options.0.name}} : {{product.variants.option1}} Available : {{product.variants.inventory_quantity }}</p>
+					
+					<button onclick="delete_Cart('{{product.cart_id}}')" class="pay-btn btn btn-danger">Remove <i class="ml-2 fa fa-credit-card pr-1"></i></button>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+{% if products|length > 0 %}
+<div class="row">
+		<button onclick="pay()" class="pay-btn pull-right btn btn-primary">Checkout<i class="ml-2 fa fa-credit-card pr-1"></i></button>					
+</div>
+{% endif %}
+{% endblock %} 
+{% block extrajs %}
+	<script src="{% static '/scripts/cart.js' %}"></script>
+ {% endblock %}

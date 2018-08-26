@@ -1,0 +1,9 @@
+django
+ShopifyAPI
+djangorestframework
+markdown
+django-filter
+django-rest-swagger
+mysqlclient
+channels
+daphne

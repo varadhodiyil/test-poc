@@ -1,0 +1,75 @@
+{% extends 'base.html' %} {% load static %} 
+{% block page_title %}
+<h1>Products</h1>
+
+{% endblock %}
+{% block page_content %}
+<div class="row">
+	{% for product in products %}
+	<div class="col-md-4">
+		<div class="card">
+			<img class="card-img-top" src="{{product.image.src}}" alt="Card image cap">
+			<div class="card-body">
+				<div>
+					<div class="row">
+						<h4 class="card-title mb-3 col-md-9">{{product.title}}</h4>
+						<p class="col-md-3 product-price">{{product.variants.0.price}} $</p>
+						
+					</div>
+					<p class="card-text text" >Vendor : {{product.vendor}}</p>
+					<p class="card-text text">{{product.body_html |safe}}</p>
+					
+
+				</div>
+				<hr/>
+				<div class="card-text text-sm-center">
+					
+					
+					{% for option in product.options %}
+					<div class="row my-3">
+
+					
+						<p class="col-md-2">{{option.name}} </p>
+						<select  class="form-control col-md-3" name="varient" id="{{product.id }}_{{forloop.counter }}" onchange="select_product(this)" required="true">
+						<option ></option>
+						{% for v in product.variants %}
+
+							<option value="{{v.id}}" quantity="{{v.inventory_quantity}}">
+							{% if forloop.parentloop.counter == 1 %}
+								{{v.option1}} , Available : {{v.inventory_quantity}}
+							{% endif %}
+							{% if forloop.parentloop.counter == 2 %}
+								{{v.option2}}, Available : {{v.inventory_quantity}}
+							{% endif %}
+							{% if forloop.parentloop.counter == 3 %}
+								{{v.option3}}, Available : {{v.inventory_quantity}}
+							{% endif %}
+							
+						</option>
+						{% endfor %}
+						</select>
+						<div class="col-md-2"></div>
+						{% if request.user.is_authenticated %}
+						<button onclick="addToCart('{{product.id}}','{{product.id }}_{{forloop.counter }}')" class="col-md-3 btn btn-primary">Add to Cart
+							 <i class="fa fa-shopping-cart pr-1"></i>
+						</button>
+						{% else %}
+						<a href="{% url 'login' %}" class="btn btn-primary col-md-4">Login : Add Cart <i class="fa fa-shopping-cart pr-1"></i></a>
+						{% endif %}
+					</div>
+						
+						
+						{% endfor %}
+					
+					
+						
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+{% endblock %} 
+{% block extrajs %}
+	<script src="{% static '/scripts/dashboard.js' %}"></script>
+ {% endblock %}
