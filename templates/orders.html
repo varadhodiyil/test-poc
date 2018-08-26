@@ -7,8 +7,9 @@
 {% endblock %}
 {% block page_content %}
 {% for order in orders %}
-<div class="row">
-		<p class="card-text text-sm-center"> Ordered : {{order.ordered_at}} ago</p>
+<div class="row my-3">
+		<p class="card-text text-sm-center col-md-6"> Ordered : {{order.ordered_at}} ago</p>
+		<div class="pull-right col-md-6"><p>Total Price : {{order.total_price}} $</p></div>
 </div>
 <div class="row">
 		<ul class="list-group col-md-12">

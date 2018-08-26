@@ -53,19 +53,34 @@ function pay(){
 	});
 }
 $(document).ready(function(){
+	var cntr = 0;
+    var interval = null;
 	$(".pay-btn").each(function(){
 		if (Number($(this).attr('quantity')) <= 0) {
 		  $(this).attr("disabled", "true");
 		}
 	  });
 
-	  socket = new WebSocket("ws://" + window.location.host + "/chat/");
+	socket = new WebSocket("ws://" + window.location.host + "/cart/");
 	socket.onmessage = function(e) {
-		alert(e.data);
+		console.log(e.data);
+		var _data = JSON.parse(e.data);
+		var x = document.getElementById("snackbar");
+		x.innerHTML = _data.message;
+		x.className = "show";
+		setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 	}
 	socket.onopen = function() {
 		socket.send("hello world");
 	}
+	interval = setInterval(function(){
+		socket.send("hello world");
+		cntr++;
+            if(cntr >=2){
+                clearTimeout(interval);
+            }
+		
+	},15000);
 	// Call onopen directly if socket is already open
 	if (socket.readyState == WebSocket.OPEN) socket.onopen();
 });

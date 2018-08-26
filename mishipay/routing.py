@@ -7,7 +7,8 @@ from django.conf.urls import url
 from mishipay.core import consumers
 
 websocket_urlpatterns = [
-    url(r'^chat/$', consumers.ChatConsumer),
+    url(r'^cart/$', consumers.CartConsumer),
+    url(r'^promotions/$', consumers.PromotionsConsumer),
 ]
 
 application = ProtocolTypeRouter({

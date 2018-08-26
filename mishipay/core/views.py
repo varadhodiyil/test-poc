@@ -47,6 +47,10 @@ class Cart(GenericAPIView):
             result['products'] = serializers.CartSerializer(
                 carts, many=True).data
             return Response(result, template_name='cart.html')
+        else:
+            result['status'] = False
+            result['error'] = "Unauthorized"
+            return Response(result)
 
     def post(self, request, *args, **kwargs):
         result = dict()
